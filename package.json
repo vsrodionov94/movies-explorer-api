@@ -1,7 +1,7 @@
 {
-  "name": "express-mesto",
+  "name": "yandex-praktikum-diploma",
   "version": "1.0.0",
-  "description": "mesto backend",
+  "description": "dimploma project",
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
@@ -9,19 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vsrodionov94/express-mesto.git"
+    "url": "git+https://github.com/vsrodionov94/movies-explorer-api.git"
   },
   "keywords": [
-    "mesto",
+    "diploma",
     "backend",
     "express"
   ],
   "author": "Vladimir Rodionov",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/vsrodionov94/express-mesto/issues"
+    "url": "https://github.com/vsrodionov94/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/vsrodionov94/express-mesto#readme",
+  "homepage": "https://github.com/vsrodionov94/movies-explorer-api#readme",
   "devDependencies": {
     "eslint": "^7.14.0",
     "eslint-config-airbnb-base": "^14.2.1",
