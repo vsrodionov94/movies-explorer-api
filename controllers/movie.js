@@ -5,7 +5,7 @@ const ForbiddenError = require('../errors/forbidden-error');
 const ValidationError = require('../errors/validation-err');
 
 const getMovies = (req, res, next) => {
-  Movie.find({})
+  Movie.find({}, { __v: 0, _id: 0 })
     .then((movies) => {
       if (!movies) throw new ServerError();
       res.status(200).send({ data: movies });
@@ -15,7 +15,7 @@ const getMovies = (req, res, next) => {
 
 const createMovie = (req, res, next) => {
   const { name, link } = req.body;
-  Movie.create({ name, link, owner: req.user._id })
+  Movie.create({ name, link, owner: req.user._id }, { __v: 0, _id: 0 })
     .then((movie) => res.status(200).send({ data: movie }))
     .catch((err) => {
       if (err.name === 'ValidationError') throw new ValidationError({ message: 'Неправильно введены данные' });
@@ -30,7 +30,8 @@ const deleteMovie = (req, res, next) => {
       if (String(movie.owner) !== req.user._id) throw new ForbiddenError('Вы не можете удалить этот фильм');
       return movie;
     }).then((movie) => {
-      Movie.findByIdAndDelete(movie.id).then(() => res.status(200).send({ data: movie }));
+      Movie.findByIdAndDelete(movie.id, { __v: 0, _id: 0 })
+        .then(() => res.status(200).send({ data: movie }));
     })
     .catch(next);
 };

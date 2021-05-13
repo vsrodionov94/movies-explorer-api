@@ -12,11 +12,25 @@ const {
 moviesRouter.get('/movies', getMovies);
 moviesRouter.post('/movies', celebrate({
   body: Joi.object().keys({
-    name: Joi.string().min(2).max(30).required(),
-    link: Joi.string().custom((value) => {
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
+    thumbnail: Joi.string().custom((value) => {
       if (validator.isURL(value, { require_protocol: true })) return value;
       throw ValidationError('Неправильно введены данные');
-    }, 'url-validation').required(),
+    }, 'url-validation'),
+    trailer: Joi.string().custom((value) => {
+      if (validator.isURL(value, { require_protocol: true })) return value;
+      throw ValidationError('Неправильно введены данные');
+    }, 'url-validation'),
+    image: Joi.string().custom((value) => {
+      if (validator.isURL(value, { require_protocol: true })) return value;
+      throw ValidationError('Неправильно введены данные');
+    }, 'url-validation'),
+    description: Joi.string().required(),
+    year: Joi.string().required(),
+    duration: Joi.number().required(),
+    director: Joi.string().required(),
+    country: Joi.string().required(),
   }),
 }), createMovie);
 moviesRouter.delete('/movie/:movieId', celebrate({
