@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors, celebrate, Joi } = require('celebrate');
 const bodyParser = require('body-parser');
-const userRouter = require('./routes/users');
-const moviesRouter = require('./routes/movie');
+const routes = require('./routes/index');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -45,8 +44,7 @@ app.post('/signin', celebrate({
 
 app.use(auth);
 
-app.use('/', userRouter);
-app.use('/', moviesRouter);
+app.use('/', routes);
 
 app.all('*', () => {
   throw new NotFoundError('Запрашиваемый ресурс не найден');
