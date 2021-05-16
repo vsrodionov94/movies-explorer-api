@@ -9,6 +9,8 @@ const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const NotFoundError = require('./errors/not-found-err');
 const ServerError = require('./errors/server-err');
+const errorCatcher = require('./errors/error-catcher');
+
 require('dotenv').config();
 
 const { PORT, NODE_ENV, DB_LINK } = process.env;
@@ -56,11 +58,6 @@ app.use(() => {
 });
 
 app.use(errorLogger);
-
-app.use((error, req, res, next) => {
-  res.status(error.statusCode || 500);
-  res.json({ message: error.message });
-  next();
-});
+app.use(errorCatcher);
 
 app.listen(NODE_ENV === 'production' ? PORT : 3000);
