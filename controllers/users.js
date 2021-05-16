@@ -4,7 +4,7 @@ const NotFoundError = require('../errors/not-found-err');
 const ServerError = require('../errors/server-err');
 const ValidationError = require('../errors/validation-err');
 const ConflictError = require('../errors/conflict-err');
-const AuthError = require('../errors/auth-error.js');
+const AuthError = require('../errors/auth-error');
 
 const User = require('../models/user');
 

@@ -3,16 +3,16 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const { errors, celebrate, Joi } = require('celebrate');
 const bodyParser = require('body-parser');
-const userRouter = require('./routes/users.js');
-const moviesRouter = require('./routes/movie.js');
-const { login, createUser } = require('./controllers/users.js');
-const auth = require('./middlewares/auth.js');
+const userRouter = require('./routes/users');
+const moviesRouter = require('./routes/movie');
+const { login, createUser } = require('./controllers/users');
+const auth = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
-const NotFoundError = require('./errors/not-found-err.js');
-const ServerError = require('./errors/server-err.js');
+const NotFoundError = require('./errors/not-found-err');
+const ServerError = require('./errors/server-err');
 require('dotenv').config();
 
-const { PORT = process.env.NODE_ENV === 'production' ? process.env.PORT : 3000 } = process.env;
+const { PORT, NODE_ENV, DB_LINK } = process.env;
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-mongoose.connect('mongodb://localhost:27017/dimplomadb', {
+mongoose.connect(NODE_ENV === 'production' ? DB_LINK : 'mongodb://localhost:27017/dimplomadb', {
   useNewUrlParser: true,
   useCreateIndex: true,
   useFindAndModify: false,
@@ -65,4 +65,4 @@ app.use((error, req, res, next) => {
   next();
 });
 
-app.listen(PORT);
+app.listen(NODE_ENV === 'production' ? PORT : 3000);

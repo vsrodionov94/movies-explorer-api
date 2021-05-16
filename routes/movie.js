@@ -1,7 +1,7 @@
 const { celebrate, Joi } = require('celebrate');
 const validator = require('validator');
 const moviesRouter = require('express').Router();
-const ValidationError = require('../errors/validation-err.js');
+const ValidationError = require('../errors/validation-err');
 
 const {
   getMovies,

@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
-const AuthError = require('../errors/auth-error.js');
+const AuthError = require('../errors/auth-error');
 
 module.exports = (req, res, next) => {
   const { authorization } = req.headers;
@@ -19,7 +19,7 @@ module.exports = (req, res, next) => {
   } catch (err) {
     throw new AuthError('Необходима авторизация');
   }
-  req.user = payload; // записываем пейлоуд в объект запроса
+  req.user = payload;
 
-  return next(); // пропускаем запрос дальше
+  return next();
 };
