@@ -7,4 +7,4 @@
 <!-- Ссылка на [сайт](https://vsrodionov.nomoredomains.monster/) -->
 
 Публичный ip: 178.154.202.31
-<!-- Доменное имя сервера: apivsrodionov.nomoredomains.club -->
+Доменное имя сервера: https://api.movies.nomoredomains.monster/
