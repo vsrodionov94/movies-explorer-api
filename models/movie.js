@@ -12,7 +12,7 @@ const movieSchema = new mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: Number,
     required: true,
   },
   owner: {

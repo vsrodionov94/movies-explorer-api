@@ -38,6 +38,7 @@ const createUser = (req, res, next) => {
               })
               .catch((err) => {
                 if (err.name === 'ValidationError') throw new ValidationError('Неправильно введены данные');
+                return next(err);
               });
           });
       } else throw new ConflictError('Данный email уже занят');
@@ -78,14 +79,22 @@ const aboutMe = (req, res, next) => {
 
 const updateMe = (req, res, next) => {
   const { _id } = req.user;
+  const { name, email } = req.body;
 
-  User.updateOne({ _id }, { $set: { name: req.body.name, email: req.body.email } })
-    .then((data) => {
-      if (!data.ok) throw new NotFoundError('Нет пользователя с таким id');
-      User.findById({ _id }, { __v: 0, _id: 0 })
-        .then((user) => res.status(200).send({ data: user }));
-    })
-    .catch(next);
+  User.findOne({ email }).then((foundUser) => {
+    if (!foundUser) {
+      User.updateOne({ _id },
+        { $set: { name, email } },
+        { runValidators: true })
+        .then((data) => {
+          if (!data.ok) throw new NotFoundError('Нет пользователя с таким id');
+          User.findById({ _id }, { __v: 0, _id: 0 })
+            .then((user) => res.status(200).send({ data: user }));
+        }).catch((err) => {
+          if (err.name === 'ValidationError') throw new ValidationError('Неправильно введены данные');
+        });
+    } else throw new ConflictError('Данный email уже занят');
+  }).catch(next);
 };
 
 module.exports = {

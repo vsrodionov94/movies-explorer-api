@@ -31,6 +31,7 @@ moviesRouter.post('/movies', celebrate({
     duration: Joi.number().required(),
     director: Joi.string().required(),
     country: Joi.string().required(),
+    movieId: Joi.number().required(),
   }),
 }), createMovie);
 moviesRouter.delete('/movie/:movieId', celebrate({
