@@ -7,7 +7,7 @@ const {
   getMovies,
   createMovie,
   deleteMovie,
-} = require('../controllers/movie');
+} = require('../controllers/movies');
 
 moviesRouter.get('/movies', getMovies);
 moviesRouter.post('/movies', celebrate({
@@ -16,16 +16,16 @@ moviesRouter.post('/movies', celebrate({
     nameEN: Joi.string().required(),
     thumbnail: Joi.string().custom((value) => {
       if (validator.isURL(value, { require_protocol: true })) return value;
-      throw ValidationError('Неправильно введены данные');
-    }, 'url-validation'),
+      throw new ValidationError('Неправильно введены данные');
+    }, 'url-validation').required(),
     trailer: Joi.string().custom((value) => {
       if (validator.isURL(value, { require_protocol: true })) return value;
-      throw ValidationError('Неправильно введены данные');
-    }, 'url-validation'),
+      throw new ValidationError('Неправильно введены данные');
+    }, 'url-validation').required(),
     image: Joi.string().custom((value) => {
       if (validator.isURL(value, { require_protocol: true })) return value;
-      throw ValidationError('Неправильно введены данные');
-    }, 'url-validation'),
+      throw new ValidationError('Неправильно введены данные');
+    }, 'url-validation').required(),
     description: Joi.string().required(),
     year: Joi.string().required(),
     duration: Joi.number().required(),

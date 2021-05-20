@@ -6,7 +6,7 @@ const ValidationError = require('../errors/validation-err');
 
 const getMovies = (req, res, next) => {
   const { _id } = req.user;
-  Movie.find({ owner: _id }, { __v: 0, _id: 0, owner: 0 }).then((movies) => {
+  Movie.find({ owner: _id }, { __v: 0, owner: 0 }).then((movies) => {
     if (!movies) throw new ServerError();
     res.status(200).send({ data: movies });
   }).catch(next);
@@ -57,7 +57,7 @@ const createMovie = (req, res, next) => {
       _id: movie._id,
     },
   })).catch((err) => {
-    if (err.name === 'ValidationError') throw new ValidationError({ message: 'Неправильно введены данные' });
+    if (err.name === 'ValidationError') return next(new ValidationError('Неправильно введены данные'));
     return next(err);
   });
 };

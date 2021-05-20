@@ -37,7 +37,7 @@ const createUser = (req, res, next) => {
                 });
               })
               .catch((err) => {
-                if (err.name === 'ValidationError') throw new ValidationError('Неправильно введены данные');
+                if (err.name === 'ValidationError') return next(new ValidationError('Неправильно введены данные'));
                 return next(err);
               });
           });
@@ -91,7 +91,8 @@ const updateMe = (req, res, next) => {
           User.findById({ _id }, { __v: 0, _id: 0 })
             .then((user) => res.status(200).send({ data: user }));
         }).catch((err) => {
-          if (err.name === 'ValidationError') throw new ValidationError('Неправильно введены данные');
+          if (err.name === 'ValidationError') return next(new ValidationError('Неправильно введены данные'));
+          return next(err);
         });
     } else throw new ConflictError('Данный email уже занят');
   }).catch(next);
