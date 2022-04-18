@@ -6,6 +6,7 @@
   
 <!-- Ссылка на [сайт](https://vsrodionov.nomoredomains.monster/) -->
 
+// Не актуально
 Публичный ip: 84.252.140.179
 
 Доменное имя сервера: https://api.movies.nomoredomains.monster/
